@@ -2,7 +2,7 @@
     import { reactive, watch } from 'vue';
     import Loader from './Loader.vue';
     import { api } from '../api';
-import { store } from '../store';
+    import { store } from '../store';
 
     const fields = reactive({
         surname: '',

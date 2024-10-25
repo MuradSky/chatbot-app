@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fancyapps/ui": "^5.0.36",
     "axios": "^1.7.7",
     "sass": "^1.79.5",
     "vue": "^3.5.10",

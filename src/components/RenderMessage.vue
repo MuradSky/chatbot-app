@@ -10,7 +10,7 @@
         </svg>
         <div :class="cn.messages">
             <div :class="[cn.item, item.includes('img') && cn.is_image]" v-for="(item, i) in message" :key="i">
-                <div :class="cn.message" v-html="item"/>
+                <div :class="cn.message" v-html="item" />
             </div>
         </div>
     </div>

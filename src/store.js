@@ -19,6 +19,9 @@ const store = reactive({
     scene: 'breeding',
     scenes: ['breeding', 'guaranteed-gifts', 'requirements-for-works'],
     responseMessage: messageVariants.greetings,
+    workNotFound: null,
+    worskSuccess: null,
+    worksData: null,
     links: {
         contacts: '/contacts',
     },
@@ -42,22 +45,24 @@ const store = reactive({
             { id: 2, value: 'https://komusart.ru/o-konkurse/usloviya-uchastiya/#adults', label: 'Работы авторов от 18 лет', isLink: true },
         ]
     },
-    checkWorkResult(data, type) {
-        store.scene = 'check-work-result';
-        if (type === 'not-found') {
+    checkWorkResult(data, fields) {
+        console.log(fields);
+        console.log(data);
+
+        if (data.message === 'Работы не найдены') {
             const result =`
                 <span class="not-found-user">
                     <span>
                         Фамилия:
-                        <b>${data.surname}</b>
+                        <b>${fields.surname}</b>
                     </span>
                     <span>
                         E-mail:
-                        <b>${data.email}</b>
+                        <b>${fields.email}</b>
                     </span>
                     <span>
                         Телефон:
-                        <b>${data.phone}</b>
+                        <b>${fields.phone}</b>
                     </span>
                 </span>
             `
@@ -65,37 +70,15 @@ const store = reactive({
                 ...messageVariants.checkWorkResult.notFound,
                 result,
             ]
+            store.worskSuccess = false;
+            store.worksData = null;
             return;
-        };
+        }
 
-        if (type === 'congratulations') {
-            const result =`
-                <span class="congratulations-user">
-                    <img src="/image.png" alt="" width="243" height="162" />
-                </span>
-            `
-            store.responseMessage = [
-                ...messageVariants.checkWorkResult.congratulations,
-                result,
-            ]
-            return;
-        };
-
-        if (type === 'exception') {
-            const result =`
-                <span class="exception-user">
-                    Добрый день, Марина!
-                    К сожалению ваша работа не одобрена для участия в конкурсе.
-                    Lorem ipsum dolor sit amet. Eos assumenda dolor sed aspernatur earum qui reprehenderit illum eum officia assumenda. In velit accusantium qui perspiciatis nihil et facere accusamus. Et voluptas vero aut assumenda voluptate At accusantium aliquid.
-                    Et quas aliquid ut assumenda velit et aperiam nihil sit necessitatibus vero vel galisum laborum. Qui perferendis nesciunt et dolorem asperiores et labore itaque et internos architecto?
-                </span>
-            `
-            store.responseMessage = [
-                ...messageVariants.checkWorkResult.exception,
-                result,
-            ]
-            return;
-        };
+        if (data.success)  {
+            store.worskSuccess = true;
+            store.worksData = data.data;
+        }
     }
 });
 

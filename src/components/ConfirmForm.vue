@@ -32,14 +32,10 @@
                 const res = await api.postUserData({
                     surname: fields.surname,
                     email: fields.email,
-                    phone: fields.phone.replace(/\D/g, ''),
+                    phone: fields.phone.slice(1),
                 });
-                function getRandomWord() {
-                    const words = ["not-found", "congratulations", "exception"];
-                    const randomIndex = Math.floor(Math.random() * words.length);
-                    return words[randomIndex];
-                }
-                store.checkWorkResult(res, getRandomWord());
+               
+                store.checkWorkResult(res, fields);
             } catch(err) {
                 console.log(err);
             } finally {

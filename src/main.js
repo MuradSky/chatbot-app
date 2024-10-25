@@ -6,5 +6,3 @@ const app = createApp(App);
 
 app.use(VueTheMask);
 app.mount('#app');
-
-console.log()
